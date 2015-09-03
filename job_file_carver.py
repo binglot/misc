@@ -25,25 +25,27 @@ EXIT_CODE_AND_STATUS_REGEX = re.compile(r'\x00\x00\x00\x00.\x13\x04\x00')
   We assume that the variable section's length is not larger than 320 bytes,
   it's an arbitrary number. If the job failes to parse correctly, increase it.
 """
-MAX_JOB_FILE_SIZE = FIXED_SECTION_LEN + 320
+MAX_JOB_FILE_SIZE = FIXED_SECTION_LEN + 320 #: increase if .JOB fails to parse
 
 
 def find_beginning(buf, offset):
-    # There should be 5 variable length values before the fixed length section,
-    # see https://msdn.microsoft.com/en-us/library/cc248287.aspx
-    #
-    # Each of them terminates with double null, let's jump 5 x double-nulls back,
-    # we'll land somewhere in the fixed length section (can't land exactly
-    # where it ends because there's no unique value separating the two
-    # sections), read a chunk of memory before and after where we landed and
-    # find in this chunk a unique value that is always at a given offset in the
-    # fixed length section.
-    #
-    # The unique value that was used is '0000 0000 ??13 0400', which are Exit
-    # Code (offset: 40-44) and Status (offset: 44-48). Once identified, we just
-    # jump back to the beginning of the fix length section and grab enough bytes
-    # to carve the entire job (the excess bytes are ignored by the parser).
-    #
+    """
+    There should be 5 variable length values before the fixed length section,
+    see https://msdn.microsoft.com/en-us/library/cc248287.aspx
+
+    Each of them terminates with double null, let's jump 5 x double-nulls back,
+    we'll land somewhere in the fixed length section (can't land exactly
+    where it ends because there's no unique value separating the two
+    sections), read a chunk of memory before and after where we landed and
+    find in this chunk a unique value that is always at a given offset in the
+    fixed length section.
+
+    The unique value that was used is '0000 0000 ??13 0400', which are Exit
+    Code (offset: 40-44) and Status (offset: 44-48). Once identified, we just
+    jump back to the beginning of the fix length section and grab enough bytes
+    to carve the entire job (the excess bytes are ignored by the parser).
+
+    """
     def go_back_to_nulls(buf, offset):
         buf.seek(offset)
         previous = None
@@ -75,6 +77,9 @@ def find_beginning(buf, offset):
     return (new_offset - FIXED_SECTION_LEN + status_code_offset - EXIT_CODE_OFFSET)
 
 def carve_out(buf, offset):
+    """
+    Flush the job file.
+    """
     buf.seek(offset)
     return buf.read(MAX_JOB_FILE_SIZE)
 
