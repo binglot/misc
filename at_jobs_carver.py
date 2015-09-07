@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Name:        job_file_carver.py
+# Name:        at_jobs_carver.py
 # Purpose:     To carve out Windows schedule task (.JOB) files from BLOBs of data,
 #              such as a memory dump or a page file. The script relies on two
 #              observations:
