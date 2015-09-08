@@ -85,7 +85,7 @@ def carve_out(buf, offset):
 
 def main(args):
     if len(args) != 3:
-        print('Usage: %s BLOB.BIN OUT_DIR' % os.path.abspath(args[0]))
+        print('Usage: %s BLOB.BIN OUT_DIR' % os.path.basename(args[0]))
         exit(1)
 
     in_file, out_dir = args[1:]
