@@ -116,7 +116,7 @@ def main(args):
                 print('[-] Failed verification')
             mm.seek(offset+1)
             offset = mm.find(magic_string)
-
+        print('[*] Done')
 
 if __name__ == '__main__':
     main(sys.argv)
