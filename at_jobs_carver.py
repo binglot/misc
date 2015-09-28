@@ -16,7 +16,7 @@
 import sys, os, mmap, re
 
 # Hard-coded values that the code relies on:
-JOB_COMMENT = 'Created by NetScheduleJobAdd'
+JOB_COMMENT = 'Created by NetScheduleJobAdd.'
 FIXED_SECTION_LEN = 68
 EXIT_CODE_OFFSET = 40
 EXIT_CODE_AND_STATUS_REGEX = re.compile(r'\x00\x00\x00\x00.\x13\x04\x00')
@@ -95,8 +95,7 @@ def main(args):
         print('[*] Created output folder: ' + os.path.abspath(out_dir))
 
     # The magic string is a unicode comment that's preceded by its size
-    # (including the 2 bytes for the size)
-    magic_string = ('%c%s' % (len(JOB_COMMENT)+2, JOB_COMMENT)).encode('utf-16-le')
+    magic_string = ('%c%s' % (len(JOB_COMMENT), JOB_COMMENT)).encode('utf-16-le')
 
     i = 1
     with open(args[1], 'r+b') as i_file:
