@@ -95,7 +95,7 @@ def main(args):
         print('[*] Created output folder: ' + os.path.abspath(out_dir))
 
     # The magic string is a unicode comment that's preceded by its size
-    # (unsure why the size needs to be incremented by 1)
+    # (including the bytes for the size)
     magic_string = ('%c%s' % (len(JOB_COMMENT)+1, JOB_COMMENT)).encode('utf-16-le')
 
     i = 1

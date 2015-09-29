@@ -128,8 +128,8 @@ def var_size_section_len(buf, start_offset):
 
     # jump the Running Instance Count field
     buf.seek(start_offset + 2)
+    end_offset = start_offset + 2
     # jump 5 fields that end with two null bytes
-    end_offset = start_offset
     for _ in xrange(5):
         str_offset = end_offset
         end_offset = find_double_nulls(buf, end_offset)
@@ -186,7 +186,6 @@ def carve_job_file(buf, offset):
     # piece together the 2 data sections
     fixed_len_data = match.group() if pass_verification(match.group()) else None
     variable_len_data = get_var_len_section(buf, match.end())
-    # return: data, where it was found, and if the data passed verification test
     return fixed_len_data, variable_len_data, offset
 
 def main(args):
