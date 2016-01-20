@@ -25,7 +25,7 @@ EXIT_CODE_AND_STATUS_REGEX = re.compile(r'\x00\x00\x00\x00.\x13\x04\x00')
   We assume that the variable section's length is not larger than 320 bytes,
   it's an arbitrary number. If the job failes to parse correctly, increase it.
 """
-MAX_JOB_FILE_SIZE = FIXED_SECTION_LEN + 320 #: increase if .JOB fails to parse
+MAX_JOB_FILE_SIZE = FIXED_SECTION_LEN + 512 #: increase if .JOB fails to parse
 
 
 def find_beginning(buf, offset):
