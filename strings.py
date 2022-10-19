@@ -21,9 +21,9 @@ def main(args):
         for s in process(i_file):
             decoded = ''
             if re.match(ascii_only_regexp, s):
-                decoded = s.decode('ascii') 
+                decoded = '[A] ' + s.decode('ascii') 
             else: 
-                decoded = (s+b'\00').decode('utf-16-le')
+                decoded = '[W] ' + (s+b'\00').decode('utf-16-le')
             print(decoded)
 
 if __name__ == "__main__":
